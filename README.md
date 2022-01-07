@@ -1,6 +1,6 @@
 # REDAXO-Addon: yform UI
 
-## :construction: ACHTUNG: ALPHA-Version - Bitte aktuell nur zum Testen benutzen.
+## :construction: ACHTUNG: ALPHA-Version - Bitte aktuell nur zum testen benutzen.
 
 Dieses Addon bietet eine einfache Möglichkeit yform-Felder mit einer Breite zu speichern.
 
