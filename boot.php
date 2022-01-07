@@ -1,9 +1,15 @@
 <?php
 $addon = rex_addon::get('yform_ui');
-rex_yform::addTemplatePath($addon->getPath('ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
     rex_view::addCssFile($addon->getAssetsUrl('css/style.css'));
+
+    /**
+     * load templates on yform init
+     */
+    rex_extension::register('YFORM_INIT', function () use($addon) {
+        rex_yform::addTemplatePath($addon->getPath('ytemplates'));
+    });
 }
 
 /**
