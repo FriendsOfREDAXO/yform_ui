@@ -3,7 +3,7 @@ $addon = rex_addon::get('yform_ui');
 rex_yform::addTemplatePath($addon->getPath('ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
-    rex_view::addCssFile($addon->getAssetsUrl('css/styles.css'));
+    rex_view::addCssFile($addon->getAssetsUrl('css/style.css'));
 }
 
 /**
