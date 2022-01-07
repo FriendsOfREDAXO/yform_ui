@@ -5,3 +5,7 @@
 Dieses Addon bietet eine einfache Möglichkeit yform-Felder mit einer Breite zu speichern.
 
 Dadurch spart man sich Zeit beim erstellen einer Tabelle und muss Felder nicht mit eigenen HTML-Feldern wrappen.
+
+---
+
+![Screenshot](https://raw.githubusercontent.com/eaCe/yform_ui/assets/yformui.png)
