@@ -88,4 +88,22 @@ class YUi
 
         return false;
     }
+
+    /**
+     * check if table should be ignored
+     * @param $id
+     * @throws rex_sql_exception
+     * @return bool
+     */
+    public static function isIgnored($id): bool
+    {
+        $sql = rex_sql::factory();
+        $sql->setQuery('SELECT value FROM ' . rex::getTablePrefix() . 'config WHERE `key`="yui_ignore" AND FIND_IN_SET (?, REPLACE(REPLACE(REPLACE(value, \'"\', \'\'), \'[\', \'\'), \']\',\'\')) > 0', [$id]);
+
+        if($sql->getRows()) {
+            return true;
+        }
+
+        return false;
+    }
 }

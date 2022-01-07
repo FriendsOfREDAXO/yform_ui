@@ -33,7 +33,7 @@
     }
 
     ?>
-    <?php if (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' && strpos($this->objparams['form_name'], 'rex_yform_searchvars') === false) : ?>
+    <?php if (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' && strpos($this->objparams['form_name'], 'rex_yform_searchvars') === false && !YUi::isIgnored($this->objparams['main_id'])) : ?>
         <?php foreach ($this->objparams['form_output'] as $index => $field):
             if ($index === 0) {
                 echo '<div class="yform-container"><div class="yform-row">';
