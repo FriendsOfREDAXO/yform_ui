@@ -8,6 +8,8 @@ Dadurch spart man sich Zeit beim erstellen einer Tabelle und muss Felder nicht m
 
 Über den EP `YUI_WIDTHS` können eigene Werte definiert werden.
 
+:warning: Sollte eine eigene Version des yform-Template "form.tpl.php" bestehen, wird dieses überschrieben.
+
 ---
 
 ![Screenshot](https://raw.githubusercontent.com/eaCe/yform_ui/assets/yformui-select.png)
