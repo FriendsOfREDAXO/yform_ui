@@ -1,0 +1,14 @@
+.yform-container {
+}
+
+.yform-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.yform-col {
+    flex: 0 0 auto;
+    padding: 0 15px;
+}
