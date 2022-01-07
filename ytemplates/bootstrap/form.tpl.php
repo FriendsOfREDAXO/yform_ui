@@ -52,6 +52,9 @@
                     echo '<div class="yform-col" style="width:'.YUi::getWidth($sql->getValue('yform_ui_width')).';">'.$field.'</div>';
                 }
             }
+            elseif(YUi::isHtml($this->objparams['values'][$index]->type)) {
+                echo $field;
+            }
             else {
                 echo '<div class="yform-col" style="width:100%;">'.$field.'</div>';
             }

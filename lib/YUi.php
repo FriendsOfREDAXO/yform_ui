@@ -60,4 +60,18 @@ class YUi
 
         return false;
     }
+
+    /**
+     * check if fieldtype is a html field
+     * @param $type
+     * @return bool
+     */
+    public static function isHtml($type): bool
+    {
+        if ($type === 'html') {
+            return true;
+        }
+
+        return false;
+    }
 }
