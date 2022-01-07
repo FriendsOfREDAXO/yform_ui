@@ -90,15 +90,34 @@ class YUi
     }
 
     /**
+     * get form id by name
+     * @param $name
+     * @return int
+     */
+    public static function getFormId($name)
+    {
+        $sql = rex_sql::factory();
+        $sql->setTable(rex::getTablePrefix() . 'yform_table');
+        $sql->setWhere(['table_name' => $name]);
+        $sql->select('id');
+
+        if($sql->getRows()) {
+            return (int)$sql->getValue('id');
+        }
+
+        return null;
+    }
+
+    /**
      * check if table should be ignored
-     * @param $id
+     * @param $formName
      * @throws rex_sql_exception
      * @return bool
      */
-    public static function isIgnored($id): bool
+    public static function isIgnored($formName): bool
     {
         $sql = rex_sql::factory();
-        $sql->setQuery('SELECT value FROM ' . rex::getTablePrefix() . 'config WHERE `key`="yui_ignore" AND FIND_IN_SET (?, REPLACE(REPLACE(REPLACE(value, \'"\', \'\'), \'[\', \'\'), \']\',\'\')) > 0', [$id]);
+        $sql->setQuery('SELECT value FROM ' . rex::getTablePrefix() . 'config WHERE `key`="yui_ignore" AND FIND_IN_SET (?, REPLACE(REPLACE(REPLACE(value, \'"\', \'\'), \'[\', \'\'), \']\',\'\')) > 0', [self::getFormId($formName)]);
 
         if($sql->getRows()) {
             return true;
