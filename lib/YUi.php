@@ -27,7 +27,12 @@ class YUi
 
     public static function getSelectWidths(): string
     {
-        return join(',', array_map(function ($width) {return $width['label'].'='.$width['value'];}, self::$widths));
+        $widths = rex_extension::registerPoint(new rex_extension_point(
+            'YUI_WIDTHS',
+            self::$widths
+        ));
+
+        return join(',', array_map(function ($width) {return $width['label'].'='.$width['value'];}, $widths));
     }
 
     /**
