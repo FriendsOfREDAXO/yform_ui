@@ -2,23 +2,32 @@
 
 class YUi
 {
-    public static function getWidth($value): string
+    static array $widths = [
+        [
+            'label' => '1/1',
+            'value' => '100%'
+        ],
+        [
+            'label' => '1/2',
+            'value' => '50%'
+        ],
+        [
+            'label' => '1/3',
+            'value' => '33.33333333333333%'
+        ],
+        [
+            'label' => '2/3',
+            'value' => '66.66666666666667%'
+        ],
+        [
+            'label' => '1/4',
+            'value' => '25%'
+        ],
+    ];
+
+    public static function getSelectWidths(): string
     {
-        if (!$value) {
-            return '100%';
-        }
-
-        $width = (float) $value;
-
-        //testing...
-        switch ($width) {
-            case 33:
-                return '33.33333333333333%';
-            case 66:
-                return '66.66666666666667%';
-            default:
-                return $width.'%';
-        }
+        return join(',', array_map(function ($width) {return $width['label'].'='.$width['value'];}, self::$widths));
     }
 
     /**

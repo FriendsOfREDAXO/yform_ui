@@ -49,7 +49,7 @@
                 $sql->select();
 
                 if($sql->getRows()) {
-                    echo '<div class="yform-col" style="width:'.YUi::getWidth($sql->getValue('yform_ui_width')).';">'.$field.'</div>';
+                    echo '<div class="yform-col" style="width:'.$sql->getValue('yform_ui_width').';">'.$field.'</div>';
                 }
             }
             elseif(YUi::isHtml($this->objparams['values'][$index]->type)) {
