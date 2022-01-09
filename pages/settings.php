@@ -27,11 +27,12 @@ $elements = array();
 
 if($sql->getRows()) {
     $elements['label'] = '
-  <label for="rex-mblock-config-template">' . rex_i18n::msg('yform_ui_tables_to_exclude') . '</label>
+  <label for="yform_ui_tables">' . rex_i18n::msg('yform_ui_tables_to_exclude') . '</label>
 ';
     $select = new rex_select;
     $select->setMultiple(true);
     $select->setAttribute('class', 'form-control');
+    $select->setAttribute('id', 'yform_ui_tables');
     $select->setName('config[yui_ignore][]');
     foreach ($sql->getArray() as $yform) {
         $select->addOption($yform['name'], $yform['id']);
