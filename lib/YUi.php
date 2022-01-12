@@ -42,33 +42,44 @@ class YUi
      */
     public static function isValueField($type): bool
     {
-        if ($type === 'checkbox' ||
-            $type === 'choice' ||
-            $type === 'date' ||
-            $type === 'text' ||
-            $type === 'textarea' ||
-            $type === 'be_link' ||
-            $type === 'be_manager_relation' ||
-            $type === 'be_media' ||
-            $type === 'be_table' ||
-            $type === 'be_user' ||
-            $type === 'datestamp' ||
-            $type === 'datetime' ||
-            $type === 'email' ||
-            $type === 'emptyname' ||
-            $type === 'google_geocode' ||
-            $type === 'hashvalue' ||
-            $type === 'index' ||
-            $type === 'integer' ||
-            $type === 'ip' ||
-            $type === 'number' ||
-            $type === 'php' ||
-            $type === 'showvalue' ||
-            $type === 'signature' ||
-            $type === 'submit' ||
-            $type === 'time' ||
-            $type === 'upload' ||
-            $type === 'uuid') {
+        $types = [
+            'checkbox',
+            'choice',
+            'date',
+            'text',
+            'textarea',
+            'be_link',
+            'be_manager_relation',
+            'be_media',
+            'be_table',
+            'be_user',
+            'datestamp',
+            'datetime',
+            'email',
+            'emptyname',
+            'google_geocode',
+            'hashvalue',
+            'index',
+            'integer',
+            'ip',
+            'number',
+            'php',
+            'showvalue',
+            'signature',
+            'submit',
+            'time',
+            'upload',
+            'uuid',
+            'custom_link',
+            'imagelist'
+        ];
+
+        $types = rex_extension::registerPoint(new rex_extension_point(
+            'YUI_TYPES',
+            $types
+        ));
+
+        if (in_array($type, $types)) {
             return true;
         }
 
