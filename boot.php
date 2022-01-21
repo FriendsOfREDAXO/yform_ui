@@ -17,10 +17,24 @@ if (rex::isBackend() && rex::getUser()) {
  */
 if(rex_url::currentBackendPage() === 'index.php?page=yform/manager/table_field') {
     rex_extension::register('YFORM_GENERATE', function (rex_extension_point $ep) {
+        /* @var $subject rex_yform */
         $subject = $ep->getSubject();
+        $appendField = false;
 
-        if(!YUi::isIgnored($subject->objparams['form_hiddenfields']['table_name']) && rex_get('type_id') === 'value') {
-            $subject->setValueField('choice', ['yform_ui_width',rex_i18n::msg('yform_ui_width'),YUi::getSelectWidths(),'0','0','','','','','','','','','0']);
+        /**
+         * check if type === value
+         */
+        foreach ($subject->objparams['form_elements'] as $formElement) {
+            if(in_array('type_id', $formElement)) {
+                if(in_array('value', $formElement)) {
+                    $appendField = true;
+                }
+                break;
+            }
+        }
+
+        if(!YUi::isIgnored($subject->objparams['form_hiddenfields']['table_name']) && $appendField) {
+            $subject->setValueField('choice', ['yform_ui_width', rex_i18n::msg('yform_ui_width'),YUi::getSelectWidths(),'0','0','','','','','','','','','0']);
         }
     });
 }
