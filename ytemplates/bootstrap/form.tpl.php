@@ -34,13 +34,20 @@
 
     ?>
     <?php if (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' && strpos($this->objparams['form_name'], 'rex_yform_searchvars') === false && !YUi::isIgnored(explode('data_edit-', $this->objparams['form_name'])[1])) : ?>
-        <?php foreach ($this->objparams['form_output'] as $index => $field):
-            if ($index === 0) {
+
+        <?php
+        $i = 0;
+        $formOutputCount = count($this->objparams['form_output']);
+        $hasSubmit = false;
+
+        foreach ($this->objparams['form_output'] as $index => $field):
+            if ($i === 0) {
                 echo '<div class="yform-container"><div class="yform-row">';
             }
 
             if($this->objparams['values'][$index]->type === 'submit') {
                 echo '</div></div>'.$field;
+                $hasSubmit = true;
             }
             else if(YUi::isValueField($this->objparams['values'][$index]->type)) {
                 $sql = rex_sql::factory();
@@ -49,7 +56,8 @@
                 $sql->select();
 
                 if($sql->getRows()) {
-                    echo '<div class="yform-col" style="width:'.$sql->getValue('yform_ui_width').';">'.$field.'</div>';
+                    $width = $sql->getValue('yform_ui_width') ?: '100%';
+                    echo '<div class="yform-col" style="width:'.$width.';">'.$field.'</div>';
                 }
             }
             elseif(YUi::isHtml($this->objparams['values'][$index]->type)) {
@@ -58,6 +66,11 @@
             else {
                 echo '<div class="yform-col" style="width:100%;">'.$field.'</div>';
             }
+
+            if($i+1 ===  $formOutputCount && !$hasSubmit) {
+                echo '</div></div>';
+            }
+            $i++;
         endforeach ?>
     <?php else: ?>
         <?php foreach ($this->objparams['form_output'] as $field):
