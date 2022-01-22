@@ -52,7 +52,7 @@
             else if(YUi::isValueField($this->objparams['values'][$index]->type)) {
                 $sql = rex_sql::factory();
                 $sql->setTable(rex::getTable('yform_field'));
-                $sql->setWhere(['name' => $this->objparams['values'][$index]->name]);
+                $sql->setWhere(['name' => $this->objparams['values'][$index]->name, 'table_name' => $this->objparams['main_table']]);
                 $sql->select();
 
                 if($sql->getRows()) {
