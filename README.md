@@ -8,7 +8,7 @@ Dadurch spart man sich Zeit beim erstellen einer Tabelle und muss Felder nicht m
 
 Über den EP `YUI_TYPES` können YForm Felder hinzugefügt oder entfernt werden.
 
-:warning: Sollte eine eigene Version des yform-Template "form.tpl.php" bestehen, wird dieses überschrieben.
+:warning: Sollte eine eigene Version des yform-Template `form.tpl.php` bestehen, wird dieses überschrieben.
 
 ---
 
