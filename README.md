@@ -5,6 +5,38 @@ Dieses Addon bietet eine einfache Möglichkeit yform-Felder mit einer Breite zu 
 Dadurch spart man sich Zeit beim erstellen einer Tabelle und muss Felder nicht mit eigenen HTML-Feldern wrappen.
 
 Über den EP `YUI_WIDTHS` können eigene Werte definiert werden.
+Möchte man die Feldbreite nicht in Prozent sondern mit einer Klasse angeben, muss man zunächst über den EP die verfügbaren Klassen definieren.
+
+Beispiel:
+
+```php
+rex_extension::register('YUI_WIDTHS', static function (rex_extension_point $ep) {
+    $ep->setSubject([
+        [
+            'label' => '1/1',
+            'value' => 'col-lg-12'
+        ],
+        [
+            'label' => '1/2',
+            'value' => 'col-lg-6'
+        ],
+        [
+            'label' => '1/3',
+            'value' => 'col-lg-4'
+        ],
+        [
+            'label' => '2/3',
+            'value' => 'col-lg-9'
+        ],
+        [
+            'label' => '1/4',
+            'value' => 'col-lg-3'
+        ],
+    ]);
+});
+```
+
+Danach kann, z.B. im project-Addon eine Kopie des fields-Fragments (`fragments/yui/fields.php`) anlegen und nach eigenen Wünschen anpassen.
 
 Über den EP `YUI_TYPES` können YForm Felder hinzugefügt oder entfernt werden.
 
