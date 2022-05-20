@@ -1,5 +1,5 @@
 package: yform_ui
-version: "1.0.0"
+version: "1.0.1"
 name: YForm UI
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/yform_ui
@@ -15,5 +15,6 @@ page:
     icon: rex-icon fa-th
     subpages:
         settings: { title: translate:settings }
+        help: { title: translate:help, subPath: README.md, icon: rex-icon fa-question-circle, itemclass: pull-right }
 
 load: early
