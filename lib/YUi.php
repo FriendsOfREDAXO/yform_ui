@@ -2,7 +2,7 @@
 
 class YUi
 {
-    static array $widths = [
+    public static array $widths = [
         [
             'label' => '1/1',
             'value' => '100%'
@@ -25,23 +25,23 @@ class YUi
         ],
     ];
 
-    public static function getSelectWidths(): string
-    {
+    public static function getSelectWidths(): string {
         $widths = rex_extension::registerPoint(new rex_extension_point(
             'YUI_WIDTHS',
             self::$widths
         ));
 
-        return join(',', array_map(function ($width) {return $width['label'].'='.$width['value'];}, $widths));
+        return implode(',', array_map(static function ($width) {
+            return $width['label'] . '=' . $width['value'];
+        }, $widths));
     }
 
     /**
      * check if fieldtype is a value field
-     * @param $type
+     * @param string $type
      * @return bool
      */
-    public static function isValueField($type): bool
-    {
+    public static function isValueField(string $type): bool {
         $types = [
             'checkbox',
             'choice',
@@ -79,7 +79,7 @@ class YUi
             $types
         ));
 
-        if (in_array($type, $types)) {
+        if (in_array($type, $types, true)) {
             return true;
         }
 
@@ -88,31 +88,26 @@ class YUi
 
     /**
      * check if fieldtype is a html field
-     * @param $type
+     * @param string $type
      * @return bool
      */
-    public static function isHtml($type): bool
-    {
-        if ($type === 'html') {
-            return true;
-        }
-
-        return false;
+    public static function isHtml(string $type): bool {
+        return $type === 'html';
     }
 
     /**
      * get form id by name
-     * @param $name
+     * @param string $name
      * @return int
+     * @throws rex_sql_exception
      */
-    public static function getFormId($name)
-    {
+    public static function getFormId(string $name) {
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTablePrefix() . 'yform_table');
         $sql->setWhere(['table_name' => $name]);
         $sql->select('id');
 
-        if($sql->getRows()) {
+        if ($sql->getRows()) {
             return (int)$sql->getValue('id');
         }
 
@@ -121,16 +116,15 @@ class YUi
 
     /**
      * check if table should be ignored
-     * @param $formName
-     * @throws rex_sql_exception
+     * @param string $formName
      * @return bool
+     * @throws rex_sql_exception
      */
-    public static function isIgnored($formName): bool
-    {
+    public static function isIgnored(string $formName): bool {
         $sql = rex_sql::factory();
         $sql->setQuery('SELECT value FROM ' . rex::getTablePrefix() . 'config WHERE `key`="yui_ignore" AND FIND_IN_SET (?, REPLACE(REPLACE(REPLACE(value, \'"\', \'\'), \'[\', \'\'), \']\',\'\')) > 0', [self::getFormId($formName)]);
 
-        if($sql->getRows()) {
+        if ($sql->getRows()) {
             return true;
         }
 
