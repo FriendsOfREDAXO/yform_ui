@@ -36,7 +36,7 @@ rex_extension::register('YUI_WIDTHS', static function (rex_extension_point $ep) 
 });
 ```
 
-Danach kann, z.B. im project-Addon eine Kopie des fields-Fragments (`fragments/yui/fields.php`) anlegen und nach eigenen Wünschen anpassen.
+Danach kann man, z.B. im project-Addon eine Kopie des fields-Fragments (`fragments/yui/fields.php`) anlegen und nach eigenen Wünschen anpassen.
 
 Über den EP `YUI_TYPES` können YForm Felder hinzugefügt oder entfernt werden.
 
