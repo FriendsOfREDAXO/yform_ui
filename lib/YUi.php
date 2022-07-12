@@ -64,7 +64,7 @@ class YUi
             'ip',
             'number',
             'php',
-            'prio'
+            'prio',
             'showvalue',
             'signature',
             'submit',
