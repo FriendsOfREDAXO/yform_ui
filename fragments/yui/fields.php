@@ -13,6 +13,12 @@ foreach ($this->objparams['form_output'] as $index => $field) {
         echo '</div></div>' . $field;
         $hasSubmit = true;
     }
+    else if ('lang_tabs' === $this->objparams['values'][$index]->type ||
+        'tabs' === $this->objparams['values'][$index]->type ||
+        'php' === $this->objparams['values'][$index]->type ||
+        YUi::isHtml($this->objparams['values'][$index]->type)) {
+        echo $field;
+    }
     else if (YUi::isValueField($this->objparams['values'][$index]->type)) {
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTable('yform_field'));
@@ -27,9 +33,6 @@ foreach ($this->objparams['form_output'] as $index => $field) {
             /** customize column if needed */
             echo '<div class="yform-col" style="width:' . $width . ';">' . $field . '</div>';
         }
-    }
-    elseif (YUi::isHtml($this->objparams['values'][$index]->type)) {
-        echo $field;
     }
     else {
         /** customize column if needed */
