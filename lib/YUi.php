@@ -72,7 +72,9 @@ class YUi
             'upload',
             'uuid',
             'custom_link',
-            'imagelist'
+            'imagelist',
+            'ycom_auth_password',
+            'generate_key'
         ];
 
         $types = rex_extension::registerPoint(new rex_extension_point(
