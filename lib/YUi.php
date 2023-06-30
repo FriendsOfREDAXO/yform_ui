@@ -119,11 +119,15 @@ class YUi
 
     /**
      * check if table should be ignored
-     * @param string $formName
+     * @param string|null $formName
      * @return bool
      * @throws rex_sql_exception
      */
-    public static function isIgnored(string $formName): bool {
+    public static function isIgnored(string|null $formName): bool {
+        if($formName === null) {
+            return false;
+        }
+        
         $sql = rex_sql::factory();
         $sql->setQuery('SELECT value FROM ' . rex::getTablePrefix() . 'config WHERE `key`="yui_ignore" AND FIND_IN_SET (?, REPLACE(REPLACE(REPLACE(value, \'"\', \'\'), \'[\', \'\'), \']\',\'\')) > 0', [self::getFormId($formName)]);
 
