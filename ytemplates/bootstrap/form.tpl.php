@@ -32,20 +32,44 @@
         }
     }
 
-    ?>
-    <?php if (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' && strpos($this->objparams['form_name'], 'rex_yform_searchvars') === false && !YUi::isIgnored(explode('data_edit-', $this->objparams['form_name'])[1])) : ?>
+    $currentPage = rex_url::currentBackendPage();
+    $formName = $this->objparams['form_name'];
+    $extractedFormName = strpos($formName, 'data_edit-') !== false 
+        ? substr($formName, strpos($formName, 'data_edit-') + 10) 
+        : $formName;
 
+    // Debugging-Ausgabe
+    // rex_logger::log('Current Page: ' . $currentPage);
+    // rex_logger::log('Form Name: ' . $formName);
+    // rex_logger::log('Extracted Form Name: ' . $extractedFormName);
+// Flexiblere Bedingung mit explizitem Ausschluss für yform/email/index
+$shouldRenderFragment = 
+    (
+        (
+            isset($_GET['func']) && 
+            ($_GET['func'] === 'edit' || $_GET['func'] === 'add') &&
+            strpos($currentPage, 'yform/manager/table_field') === false &&
+            strpos($currentPage, 'yform/email/index') === false &&
+            strpos($currentPage, 'yform/manager/table_edit') === false 
+            
+        ) ||
+        $currentPage === 'index.php?page=yform/manager/data_edit'
+    ) && 
+    strpos($formName, 'rex_yform_searchvars') === false && 
+    !YUi::isIgnored($extractedFormName);
+
+
+    if ($shouldRenderFragment) : ?>
         <?php
-            $fragment = new rex_fragment();
-            $fragment->setVar('objparams', $this->objparams, false);
-            echo $fragment->parse('yui/fields.php');
+        $fragment = new rex_fragment();
+        $fragment->setVar('objparams', $this->objparams, false);
+        echo $fragment->parse('yui/fields.php');
         ?>
     <?php else: ?>
         <?php foreach ($this->objparams['form_output'] as $field):
             echo $field;
         endforeach ?>
     <?php endif; ?>
-
 
     <?php for ($i = 0; $i < $this->objparams['fieldsets_opened']; ++$i):
         echo $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
