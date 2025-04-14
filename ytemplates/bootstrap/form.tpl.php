@@ -50,8 +50,10 @@ $shouldRenderFragment =
             ($_GET['func'] === 'edit' || $_GET['func'] === 'add') &&
             strpos($currentPage, 'yform/manager/table_field') === false &&
             strpos($currentPage, 'yform/email/index') === false &&
-            strpos($currentPage, 'yform/manager/table_edit') === false 
-            
+            strpos($currentPage, 'yform/manager/table_edit') === false &&
+            strpos($currentPage, 'yrewrite/domains') === false &&
+            strpos($currentPage, 'yrewrite/alias_domains') === false &&
+            strpos($currentPage, 'yrewrite/forward') === false            
         ) ||
         $currentPage === 'index.php?page=yform/manager/data_edit'
     ) && 
