@@ -59,5 +59,6 @@ Danach kann man, z.B. im project-Addon eine Kopie des fields-Fragments (`fragmen
 ### Version 1.1.0
 - Neu: Tableset Export und Import mit Feldbreiten (`YuiTablesetApi`, Backend-Seiten „Tableset Export“ und „Tableset Import“).
 - Fix: Die Spalte `yform_ui_width` wird bei Installation, Update, Export und Import angelegt, falls sie fehlt (vorher SQL-Fehler auf einer frischen Datenbank).
+- Fix #16: Fieldsets werden nicht mehr in ein Container-Div (`yform-col`) gepackt; sie umschließen jetzt ganze Zeilen und das HTML bleibt gültig.
 - Fix: Feldbreiten funktionieren auch, wenn die YForm-Tabelle in einer Addon-Seite eingebunden wird (#14). Die Bearbeiten-Ansicht wird zusätzlich am Formularnamen `data_edit-<Tabelle>` erkannt; das bisherige Verhalten bleibt erhalten.
 
