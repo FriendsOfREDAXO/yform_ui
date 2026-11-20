@@ -33,7 +33,16 @@
     }
 
     ?>
-    <?php if (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' && strpos($this->objparams['form_name'], 'rex_yform_searchvars') === false && !YUi::isIgnored(explode('data_edit-', $this->objparams['form_name'])[1])) : ?>
+    <?php
+    // Die Bearbeiten-Ansicht wird zusätzlich am Formularnamen „data_edit-<Tabelle>“ erkannt, nicht nur an der Seiten-URL.
+    // So greifen die Feldbreiten auch, wenn ein Addon die YForm-Datenansicht unter einer eigenen Seite einbettet (siehe Issue #14).
+    $yuiFormName = (string) $this->objparams['form_name'];
+    $yuiIsDataEdit = rex::isBackend()
+        && (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' || str_starts_with($yuiFormName, 'data_edit-'))
+        && str_contains($yuiFormName, 'data_edit-')
+        && !str_contains($yuiFormName, 'rex_yform_searchvars');
+?>
+    <?php if ($yuiIsDataEdit && !YUi::isIgnored(explode('data_edit-', $yuiFormName)[1])) : ?>
 
         <?php
             $fragment = new rex_fragment();
