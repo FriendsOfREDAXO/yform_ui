@@ -13,6 +13,10 @@ foreach ($this->objparams['form_output'] as $index => $field) {
         echo '</div></div>' . $field;
         $hasSubmit = true;
     }
+    else if ('fieldset' === $this->objparams['values'][$index]->type) {
+        /** Fieldsets umschließen ganze Zeilen: laufende Zeile beenden, Fieldset ausgeben, neue Zeile beginnen (#16) */
+        echo '</div></div>' . $field . '<div class="yform-container"><div class="yform-row">';
+    }
     else if (YUi::isValueField($this->objparams['values'][$index]->type)) {
         $sql = rex_sql::factory();
         $sql->setTable(rex::getTable('yform_field'));

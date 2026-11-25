@@ -25,6 +25,18 @@ class YUi
         ],
     ];
 
+    /**
+     * Legt die Spalte yform_ui_width in der Feldtabelle an, falls sie fehlt.
+     * YForm legt sie sonst erst beim ersten Speichern eines Feldes im YForm-Manager an; Export und Import eines Tablesets
+     * (z. B. auf einer frischen Datenbank) würden vorher mit einem SQL-Fehler abbrechen.
+     */
+    public static function ensureColumn(): void
+    {
+        rex_sql_table::get(rex::getTable('yform_field'))
+            ->ensureColumn(new rex_sql_column('yform_ui_width', 'text'))
+            ->ensure();
+    }
+
     public static function getSelectWidths(): string {
         $widths = rex_extension::registerPoint(new rex_extension_point(
             'YUI_WIDTHS',

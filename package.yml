@@ -1,5 +1,5 @@
 package: yform_ui
-version: "1.0.3"
+version: "1.1.0"
 name: YForm UI
 author: Friends Of REDAXO
 supportpage: https://github.com/FriendsOfREDAXO/yform_ui
@@ -15,6 +15,8 @@ page:
     icon: rex-icon fa-th
     subpages:
         settings: { title: translate:settings }
+        export: { title: "Tableset Export", icon: rex-icon fa-download }
+        import: { title: "Tableset Import", icon: rex-icon fa-upload }
         help: { title: translate:help, subPath: README.md, icon: rex-icon fa-question-circle, itemclass: pull-right }
 
 load: early

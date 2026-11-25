@@ -33,33 +33,33 @@
     }
 
     $currentPage = rex_url::currentBackendPage();
-    $formName = $this->objparams['form_name'];
-    $extractedFormName = strpos($formName, 'data_edit-') !== false 
-        ? substr($formName, strpos($formName, 'data_edit-') + 10) 
+    $formName = (string) $this->objparams['form_name'];
+    $extractedFormName = str_contains($formName, 'data_edit-')
+        ? substr($formName, strpos($formName, 'data_edit-') + 10)
         : $formName;
 
-    // Debugging-Ausgabe
-    // rex_logger::log('Current Page: ' . $currentPage);
-    // rex_logger::log('Form Name: ' . $formName);
-    // rex_logger::log('Extracted Form Name: ' . $extractedFormName);
-// Flexiblere Bedingung mit explizitem Ausschluss für yform/email/index
-$shouldRenderFragment = 
-    (
-        (
-            isset($_GET['func']) && 
-            ($_GET['func'] === 'edit' || $_GET['func'] === 'add') &&
-            strpos($currentPage, 'yform/manager/table_field') === false &&
-            strpos($currentPage, 'yform/email/index') === false &&
-            strpos($currentPage, 'yform/manager/table_edit') === false &&
-            strpos($currentPage, 'yrewrite/domains') === false &&
-            strpos($currentPage, 'yrewrite/alias_domains') === false &&
-            strpos($currentPage, 'yrewrite/forward') === false            
-        ) ||
-        $currentPage === 'index.php?page=yform/manager/data_edit'
-    ) && 
-    strpos($formName, 'rex_yform_searchvars') === false && 
-    !YUi::isIgnored($extractedFormName);
-
+    // Feldbreiten nur im Backend anwenden:
+    // - bei func=edit/add (ausgenommen bestimmte YForm-/YRewrite-Seiten)
+    // - auf der YForm-Datenansicht
+    // - oder wenn der Formularname „data_edit-<Tabelle>“ lautet, z. B. wenn ein Addon die
+    //   YForm-Datenansicht unter einer eigenen Seite einbettet (siehe Issue #14)
+    $shouldRenderFragment = rex::isBackend()
+        && (
+            (
+                isset($_GET['func'])
+                && ($_GET['func'] === 'edit' || $_GET['func'] === 'add')
+                && !str_contains($currentPage, 'yform/manager/table_field')
+                && !str_contains($currentPage, 'yform/email/index')
+                && !str_contains($currentPage, 'yform/manager/table_edit')
+                && !str_contains($currentPage, 'yrewrite/domains')
+                && !str_contains($currentPage, 'yrewrite/alias_domains')
+                && !str_contains($currentPage, 'yrewrite/forward')
+            )
+            || $currentPage === 'index.php?page=yform/manager/data_edit'
+            || str_starts_with($formName, 'data_edit-')
+        )
+        && !str_contains($formName, 'rex_yform_searchvars')
+        && !YUi::isIgnored($extractedFormName);
 
     if ($shouldRenderFragment) : ?>
         <?php
