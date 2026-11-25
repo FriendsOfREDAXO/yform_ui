@@ -32,29 +32,46 @@
         }
     }
 
-    ?>
-    <?php
-    // Die Bearbeiten-Ansicht wird zusätzlich am Formularnamen „data_edit-<Tabelle>“ erkannt, nicht nur an der Seiten-URL.
-    // So greifen die Feldbreiten auch, wenn ein Addon die YForm-Datenansicht unter einer eigenen Seite einbettet (siehe Issue #14).
-    $yuiFormName = (string) $this->objparams['form_name'];
-    $yuiIsDataEdit = rex::isBackend()
-        && (rex_url::currentBackendPage() === 'index.php?page=yform/manager/data_edit' || str_starts_with($yuiFormName, 'data_edit-'))
-        && str_contains($yuiFormName, 'data_edit-')
-        && !str_contains($yuiFormName, 'rex_yform_searchvars');
-?>
-    <?php if ($yuiIsDataEdit && !YUi::isIgnored(explode('data_edit-', $yuiFormName)[1])) : ?>
+    $currentPage = rex_url::currentBackendPage();
+    $formName = (string) $this->objparams['form_name'];
+    $extractedFormName = str_contains($formName, 'data_edit-')
+        ? substr($formName, strpos($formName, 'data_edit-') + 10)
+        : $formName;
 
+    // Feldbreiten nur im Backend anwenden:
+    // - bei func=edit/add (ausgenommen bestimmte YForm-/YRewrite-Seiten)
+    // - auf der YForm-Datenansicht
+    // - oder wenn der Formularname „data_edit-<Tabelle>“ lautet, z. B. wenn ein Addon die
+    //   YForm-Datenansicht unter einer eigenen Seite einbettet (siehe Issue #14)
+    $shouldRenderFragment = rex::isBackend()
+        && (
+            (
+                isset($_GET['func'])
+                && ($_GET['func'] === 'edit' || $_GET['func'] === 'add')
+                && !str_contains($currentPage, 'yform/manager/table_field')
+                && !str_contains($currentPage, 'yform/email/index')
+                && !str_contains($currentPage, 'yform/manager/table_edit')
+                && !str_contains($currentPage, 'yrewrite/domains')
+                && !str_contains($currentPage, 'yrewrite/alias_domains')
+                && !str_contains($currentPage, 'yrewrite/forward')
+            )
+            || $currentPage === 'index.php?page=yform/manager/data_edit'
+            || str_starts_with($formName, 'data_edit-')
+        )
+        && !str_contains($formName, 'rex_yform_searchvars')
+        && !YUi::isIgnored($extractedFormName);
+
+    if ($shouldRenderFragment) : ?>
         <?php
-            $fragment = new rex_fragment();
-            $fragment->setVar('objparams', $this->objparams, false);
-            echo $fragment->parse('yui/fields.php');
+        $fragment = new rex_fragment();
+        $fragment->setVar('objparams', $this->objparams, false);
+        echo $fragment->parse('yui/fields.php');
         ?>
     <?php else: ?>
         <?php foreach ($this->objparams['form_output'] as $field):
             echo $field;
         endforeach ?>
     <?php endif; ?>
-
 
     <?php for ($i = 0; $i < $this->objparams['fieldsets_opened']; ++$i):
         echo $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
